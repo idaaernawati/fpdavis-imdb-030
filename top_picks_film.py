@@ -1,169 +1,78 @@
-import streamlit as st
-import mysql.connector
 import pandas as pd
+import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Koneksi ke database
-def create_connection():
-    try:
-        conn = mysql.connector.connect(
-            host="kubela.id",
-            user="davis2024irwan",
-            password="wh451n9m@ch1n3", 
-            port="3306",
-            database="aw"
-        )
-        return conn
-    except mysql.connector.Error as err:
-        st.error(f"Error: {err}")
-        return None
+# Nama file CSV
+fn1 = 'top_picks_film.csv'
 
-# Fungsi untuk menjalankan query dan mendapatkan hasil sebagai DataFrame
-def execute_query(query):
-    conn = create_connection()
-    if conn is None:
-        return pd.DataFrame()  # Return an empty DataFrame if connection fails
-    try:
-        cursor = conn.cursor()
-        cursor.execute(query)
-        columns = [col[0] for col in cursor.description]
-        data = cursor.fetchall()
-        cursor.close()
-        conn.close()
-        return pd.DataFrame(data, columns=columns)
-    except mysql.connector.Error as err:
-        st.error(f"Error: {err}")
-        return pd.DataFrame()
+# Menampilkan judul di halaman web
+st.title("Visualization Scraping Film IMDB")
+
+# Membaca file CSV ke dalam DataFrame dengan encoding 'latin1'
+df1 = pd.read_csv(fn1, encoding='latin1')
+
+# Menampilkan DataFrame sebagai tabel
+st.dataframe(df1)
 
 # Sidebar for navigation
 st.sidebar.title("Navigation")
-option = st.sidebar.selectbox(
+selected_aspect = st.sidebar.selectbox(
     'Select Analysis Aspect',
     ('Comparison', 'Relationship', 'Composition', 'Distribution')
 )
 
-st.title("Visualization Dump Data Warehouse Adventure Works")
-
-# Display selected aspect
-if option == 'Comparison':
-    st.header("Comparison - Bar Chart")
-    query_comparison = """
-    SELECT
-        p.EnglishProductName AS ProductName,
-        SUM(s.SalesAmount) AS TotalSales
-    FROM
-        factinternetsales s
-    INNER JOIN
-        dimproduct p ON s.ProductKey = p.ProductKey
-    GROUP BY
-        p.EnglishProductName;
-    """
-    comparison_data = execute_query(query_comparison)
-
-    if not comparison_data.empty:
-        fig1, ax1 = plt.subplots(figsize=(23, 10))
-        ax1.bar(comparison_data['ProductName'], comparison_data['TotalSales'], color='skyblue')
-        ax1.set_xlabel('Product Name')
-        ax1.set_ylabel('Total Sales')
-        ax1.set_title('Comparison of Total Sales by Product')
-        ax1.set_xticks(range(len(comparison_data['ProductName'])))
-        ax1.set_xticklabels(comparison_data['ProductName'], rotation=90)
-        ax1.grid(axis='y', linestyle='--', alpha=0.7)
-        st.pyplot(fig1)
-        st.markdown("""
-        **Narasi Grafik**: Grafik batang di atas menampilkan perbandingan total penjualan untuk setiap produk berdasarkan data dari database Adventure Works. Setiap batang mewakili sebuah produk, dengan tinggi batang menunjukkan jumlah total penjualan yang dihasilkan produk tersebut. Warna biru langit digunakan untuk batang, memberikan kontras yang jelas dengan latar belakang. Nama-nama produk tercantum di sumbu x dan dirotasi 90 derajat untuk memastikan keterbacaan, sementara sumbu y menunjukkan total penjualan. Judul grafik serta label sumbu x dan y memberikan konteks yang jelas tentang informasi yang ditampilkan, dan garis-garis kisi horizontal membantu dalam memperkirakan nilai penjualan setiap produk dengan lebih mudah.
+# Menampilkan visualisasi berdasarkan aspek yang dipilih
+if selected_aspect == "Comparison":
+    st.subheader("Comparison - Bar Chart")
+    # Contoh Bar Chart: Membandingkan rating film
+    plt.figure(figsize=(11, 7))
+    sns.barplot(x='Title', y='Rating', data=df1)
+    plt.xticks(rotation=90)
+    plt.title("Comparison of Movie Ratings")
+    st.pyplot(plt)
+    st.markdown("""
+        **Narasi Grafik**: Grafik batang di atas menampilkan perbandingan rating berbagai film. Pada sumbu horizontal, terdapat judul-judul film yang disusun secara vertikal agar lebih mudah dibaca. Sementara itu, sumbu vertikal menunjukkan nilai rating dari setiap film. Tinggi masing-masing batang mewakili rating yang diperoleh film tersebut, memungkinkan kita untuk dengan cepat membandingkan popularitas atau kualitas relatif dari setiap film berdasarkan rating yang diberikan. Judul grafik, "Comparison of Movie Ratings," memberikan konteks yang jelas bahwa fokus utama adalah pada perbandingan rating film. Melalui visualisasi ini, kita bisa mengidentifikasi film mana yang mendapatkan rating tertinggi dan terendah, serta melihat distribusi rating secara keseluruhan.
         """)
-    else:
-        st.warning("No data to display")
 
-elif option == 'Relationship':
-    st.header("Relationship - Scatter Plot")
-    query_relationship = """
-    SELECT fs.CustomerKey, fs.ProductKey,
-           dc.FirstName, dc.LastName,
-           dp.EnglishProductName
-    FROM factinternetsales fs
-    JOIN dimcustomer dc ON fs.CustomerKey = dc.CustomerKey
-    JOIN dimproduct dp ON fs.ProductKey = dp.ProductKey
-    """
-    relationship_data = execute_query(query_relationship)
-
-    if not relationship_data.empty:
-        fig2, ax2 = plt.subplots(figsize=(17, 12))
-        sns.scatterplot(data=relationship_data, x='CustomerKey', y='ProductKey', hue='EnglishProductName', ax=ax2)
-        ax2.set_title('Relationship between Customers and Products')
-        ax2.set_xlabel('Customer Key')
-        ax2.set_ylabel('Product Key')
-        ax2.legend(title='Product', loc='upper right', bbox_to_anchor=(1.25, 1))
-        ax2.grid(True)
-        st.pyplot(fig2)
-        st.markdown("""
-        **Narasi Grafik**: Grafik scatter plot di atas menampilkan hubungan antara pelanggan dan produk yang mereka beli berdasarkan data dari database Adventure Works. Setiap titik pada grafik mewakili satu transaksi, dengan sumbu x menunjukkan CustomerKey dan sumbu y menunjukkan ProductKey. Warna dari setiap titik ditentukan oleh produk yang dibeli, dengan legenda di sisi kanan yang mengidentifikasi produk berdasarkan warna. Grafik ini memudahkan untuk melihat pola pembelian dan frekuensi transaksi antara pelanggan tertentu dengan produk-produk spesifik. Judul grafik serta label sumbu x dan y memberikan konteks yang jelas, sementara garis kisi membantu dalam mengidentifikasi posisi masing-masing titik dengan lebih mudah.
+elif selected_aspect == "Relationship":
+    st.subheader("Relationship - Scatter Plot")
+    # Contoh Scatter Plot: Hubungan antara budget dan gross
+    plt.figure(figsize=(12, 8))
+    sns.scatterplot(x='Budget', y='Gross_us', data=df1)
+    plt.title("Relationship between Budget and Gross Revenue")
+    st.pyplot(plt)
+    st.markdown("""
+        **Narasi Grafik**: Grafik scatter plot di atas menampilkan hubungan antara anggaran (budget) dan pendapatan kotor (gross revenue) dari berbagai film. Pada sumbu horizontal, ditampilkan nilai anggaran yang dialokasikan untuk masing-masing film, sedangkan pada sumbu vertikal, tercatat pendapatan kotor yang dihasilkan oleh film tersebut. Setiap titik pada grafik mewakili satu film, sehingga kita dapat melihat pola atau tren tertentu dalam data. Judul grafik, "Relationship between Budget and Gross Revenue," menjelaskan fokus utama dari analisis ini, yaitu untuk menilai bagaimana anggaran film berhubungan dengan pendapatan yang dihasilkan. Melalui visualisasi ini, kita dapat mengamati apakah ada kecenderungan bahwa film dengan anggaran lebih besar cenderung menghasilkan pendapatan kotor yang lebih tinggi, atau jika ada outlier yang menonjol dengan anggaran kecil namun pendapatan besar, atau sebaliknya.
         """)
-    else:
-        st.warning("No data to display")
 
-elif option == 'Composition':
-    st.header("Composition - Donut Chart")
-    query_composition = """
-    SELECT
-        pc.EnglishProductCategoryName AS CategoryName,
-        SUM(s.SalesAmount) AS TotalSales
-    FROM
-        factinternetsales s
-    INNER JOIN
-        dimproduct p ON s.ProductKey = p.ProductKey
-    INNER JOIN
-        dimproductsubcategory ps ON p.ProductSubcategoryKey = ps.ProductSubcategoryKey
-    INNER JOIN
-        dimproductcategory pc ON ps.ProductCategoryKey = pc.ProductCategoryKey
-    GROUP BY
-        pc.EnglishProductCategoryName;
-    """
-    composition_data = execute_query(query_composition)
-
-    if not composition_data.empty:
-        fig3, ax3 = plt.subplots(figsize=(8, 7))
-        outer_colors = ['blue', 'red', 'green']
-        ax3.pie(composition_data['TotalSales'], labels=composition_data['CategoryName'], autopct='%1.1f%%', startangle=140, colors=outer_colors, wedgeprops=dict(width=0.3, edgecolor='w'))
-        inner_circle = plt.Circle((0, 0), 0.7, color='white')
-        ax3.add_artist(inner_circle)
-        ax3.set_title('Composition of Total Sales by Product Category')
-        ax3.axis('equal')
-        st.pyplot(fig3)
-        st.markdown("""
-        **Narasi Grafik**: Grafik donat di atas menampilkan komposisi total penjualan berdasarkan kategori produk dari data di database Adventure Works. Setiap segmen pada grafik mewakili satu kategori produk, dengan ukuran segmen menunjukkan proporsi total penjualan yang dihasilkan oleh kategori tersebut. Warna biru, merah, dan hijau digunakan untuk membedakan kategori-kategori yang berbeda. Persentase penjualan untuk setiap kategori ditampilkan di dalam segmen, memberikan informasi kuantitatif yang jelas. Judul grafik menegaskan bahwa visualisasi ini menunjukkan distribusi penjualan di antara berbagai kategori produk.
+elif selected_aspect == "Composition":
+    st.subheader("Composition - Donut Chart")
+    # Contoh Donut Chart: Komposisi genre film
+    genre_counts = df1['Genre'].value_counts()
+    plt.figure(figsize=(17, 19))
+    plt.pie(genre_counts, labels=genre_counts.index, autopct='%1.1f%%', startangle=140, wedgeprops=dict(width=0.3))
+    plt.title("Composition of Movie Genres")
+    st.pyplot(plt)
+    st.markdown("""
+        **Narasi Grafik**: Grafik donat di atas menampilkan komposisi genre film yang ada dalam dataset. Setiap segmen pada grafik merepresentasikan satu genre film, dengan ukuran segmen yang proporsional terhadap jumlah film dalam genre tersebut. Persentase di dalam setiap segmen menunjukkan proporsi masing-masing genre dalam keseluruhan kumpulan data. Judul grafik, "Composition of Movie Genres," menjelaskan bahwa fokus utama adalah untuk menunjukkan distribusi berbagai genre film. Melalui visualisasi ini, kita dapat dengan mudah melihat genre mana yang paling dominan dan seberapa besar kontribusi masing-masing genre terhadap total keseluruhan. Grafik donat ini memberikan gambaran yang jelas dan intuitif tentang bagaimana berbagai genre film terdistribusi dalam dataset.
         """)
-    else:
-        st.warning("No data to display")
 
-elif option == 'Distribution':
-    st.header("Distribution - Line Chart")
-    query_distribution = """
-    SELECT
-        t.FullDateAlternateKey AS SalesDate,
-        SUM(s.SalesAmount) AS TotalSales
-    FROM
-        factinternetsales s
-    INNER JOIN
-        dimtime t ON s.OrderDateKey = t.TimeKey
-    GROUP BY
-        t.FullDateAlternateKey;
-    """
-    distribution_data = execute_query(query_distribution)
-
-    if not distribution_data.empty:
-        distribution_data['SalesDate'] = pd.to_datetime(distribution_data['SalesDate'])
-        fig4, ax4 = plt.subplots(figsize=(17, 13))
-        ax4.plot(distribution_data['SalesDate'], distribution_data['TotalSales'], marker='o', color='green', linestyle='-')
-        ax4.set_xlabel('Sales Date')
-        ax4.set_ylabel('Total Sales')
-        ax4.set_title('Distribution of Sales over Time')
-        ax4.grid(True, linestyle='--', alpha=0.7)
-        st.pyplot(fig4)
-        st.markdown("""
-        **Narasi Grafik**: Grafik garis di atas menampilkan distribusi total penjualan sepanjang waktu berdasarkan data dari database Adventure Works. Sumbu x menunjukkan tanggal penjualan, sementara sumbu y menunjukkan jumlah total penjualan pada setiap tanggal tersebut. Garis hijau yang dihubungkan dengan marker 'o' menunjukkan tren penjualan dari waktu ke waktu, dengan fluktuasi yang mencerminkan perubahan dalam volume penjualan harian. Judul grafik serta label pada sumbu x dan y memberikan konteks yang jelas, sedangkan rotasi 45 derajat pada label tanggal memastikan keterbacaan. Garis kisi yang digunakan membantu dalam visualisasi perubahan dan pola penjualan dengan lebih mudah.
+elif selected_aspect == "Distribution":
+    st.subheader("Distribution - Line Chart")
+    # Contoh Line Chart: Distribusi rating film
+    plt.figure(figsize=(13, 9))
+    sns.lineplot(data=df1['Rating'])
+    plt.title("Distribution of Movie Ratings")
+    st.pyplot(plt)
+    st.markdown("""
+        **Narasi Grafik**: Grafik garis di atas menampilkan distribusi rating film dalam dataset. Sumbu horizontal merepresentasikan urutan data rating film, sementara sumbu vertikal menunjukkan nilai rating tersebut. Setiap titik pada grafik dihubungkan dengan garis, memberikan visualisasi yang jelas tentang bagaimana rating film terdistribusi. Judul grafik, "Distribution of Movie Ratings," menekankan bahwa fokus utama adalah pada distribusi nilai rating. Melalui visualisasi ini, kita dapat mengamati pola atau tren tertentu dalam rating film, seperti apakah terdapat banyak film dengan rating tinggi atau rendah, dan bagaimana variasi rating tersebut tersebar. Grafik ini membantu kita memahami bagaimana kualitas film dinilai secara keseluruhan dalam dataset.
         """)
-    else:
-        st.warning("No data to display")
+
+st.markdown("""
+<style>
+.sidebar .sidebar-content {
+    background-color: #f0f2f6;
+}
+</style>
+""", unsafe_allow_html=True)
