@@ -24,7 +24,7 @@ selected_aspect = st.sidebar.selectbox(
 
 # Menampilkan visualisasi berdasarkan aspek yang dipilih
 if selected_aspect == "Comparison":
-    st.subheader("Comparison Chart - Bar Chart")
+    st.subheader("Comparison - Bar Chart")
     # Contoh Bar Chart: Membandingkan rating film
     plt.figure(figsize=(11, 7))
     sns.barplot(x='Title', y='Rating', data=df1)
@@ -36,7 +36,7 @@ if selected_aspect == "Comparison":
         """)
 
 elif selected_aspect == "Relationship":
-    st.subheader("Relationship Chart - Scatter Plot")
+    st.subheader("Relationship - Scatter Plot")
     # Contoh Scatter Plot: Hubungan antara budget dan gross
     plt.figure(figsize=(12, 8))
     sns.scatterplot(x='Budget', y='Gross_us', data=df1)
@@ -47,7 +47,7 @@ elif selected_aspect == "Relationship":
         """)
 
 elif selected_aspect == "Composition":
-    st.subheader("Composition Chart - Donut Chart")
+    st.subheader("Composition - Donut Chart")
     # Contoh Donut Chart: Komposisi genre film
     genre_counts = df1['Genre'].value_counts()
     plt.figure(figsize=(17, 19))
@@ -59,7 +59,7 @@ elif selected_aspect == "Composition":
         """)
 
 elif selected_aspect == "Distribution":
-    st.subheader("Distribution Chart - Line Chart")
+    st.subheader("Distribution - Line Chart")
     # Contoh Line Chart: Distribusi rating film
     plt.figure(figsize=(13, 9))
     sns.lineplot(data=df1['Rating'])
