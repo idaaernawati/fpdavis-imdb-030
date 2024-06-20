@@ -2,64 +2,67 @@ import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
-import plotly.graph_objects as go
 
-# Load the data
+# Nama file CSV
 fn1 = 'top_picks_film.csv'
-df1 = pd.read_csv(fn1, encoding='latin1')
 
-# Title
+# Menampilkan judul di halaman web
 st.title("Scraping Film IMDB")
 
-# Sidebar for selecting aspect
-st.sidebar.title("Choose an Aspect")
-aspect = st.sidebar.selectbox("Select the aspect to visualize", 
-                              ("Comparison", "Relationship", "Composition", "Distribution"))
+# Membaca file CSV ke dalam DataFrame dengan encoding 'latin1'
+df1 = pd.read_csv(fn1, encoding='latin1')
 
-# Main content
+# Menampilkan DataFrame sebagai tabel
 st.dataframe(df1)
 
-if aspect == "Comparison":
-    # Comparison - Bar Chart
-    st.header("Comparison of Movie Ratings")
-    fig, ax = plt.subplots(figsize=(12, 8))
-    sns.barplot(x='Rating', y='Title', data=df1.sort_values(by='Rating', ascending=False), ax=ax)
-    ax.set_title('Comparison of Movie Ratings')
-    ax.set_xlabel('Rating')
-    ax.set_ylabel('Movie Title')
-    st.pyplot(fig)
-    st.write("This bar chart compares the ratings of different movies. It helps identify which movies have higher ratings and are potentially more popular or well-received.")
+# Membuat dropdown untuk memilih aspek visualisasi
+aspects = ["Comparison", "Relationship", "Composition", "Distribution"]
+selected_aspect = st.sidebar.selectbox("Pilih Aspek Visualisasi", aspects)
 
-elif aspect == "Relationship":
-    # Relationship - Scatter Plot
-    st.header("Relationship of Movie Ratings")
-    fig, ax = plt.subplots(figsize=(12, 8))
-    sns.scatterplot(x='Rating', y='Title', data=df1, ax=ax)
-    ax.set_title('Relationship of Movie Ratings')
-    ax.set_xlabel('Rating')
-    ax.set_ylabel('Movie Title')
-    st.pyplot(fig)
-    st.write("This scatter plot shows the relationship of movie ratings. Each point represents a movie, helping us see any patterns or clusters in the ratings.")
+# Menampilkan visualisasi berdasarkan aspek yang dipilih
+if selected_aspect == "Comparison":
+    st.subheader("Comparison Chart - Bar Chart")
+    # Contoh Bar Chart: Membandingkan rating film
+    plt.figure(figsize=(10, 6))
+    sns.barplot(x='Title', y='Rating', data=df1)
+    plt.xticks(rotation=90)
+    plt.title("Comparison of Movie Ratings")
+    st.pyplot(plt)
 
-elif aspect == "Composition":
-    # Composition - Donut Chart
-    st.header("Composition of Movie Ratings")
-    rating_counts = df1['Rating'].value_counts()
-    fig = go.Figure(data=[go.Pie(labels=rating_counts.index, values=rating_counts.values, hole=.3)])
-    fig.update_layout(title_text='Composition of Movie Ratings')
-    st.plotly_chart(fig)
-    st.write("This donut chart illustrates the composition of movie ratings. It shows the proportion of movies that fall within different rating categories.")
+elif selected_aspect == "Relationship":
+    st.subheader("Relationship Chart - Scatter Plot")
+    # Contoh Scatter Plot: Hubungan antara budget dan gross
+    plt.figure(figsize=(10, 6))
+    sns.scatterplot(x='Budget', y='Gross_us', data=df1)
+    plt.title("Relationship between Budget and Gross Revenue")
+    st.pyplot(plt)
 
-elif aspect == "Distribution":
-    # Distribution - Line Chart
-    st.header("Distribution of Movie Ratings")
-    fig, ax = plt.subplots(figsize=(12, 8))
-    sns.lineplot(x='Title', y='Rating', data=df1, ax=ax)
-    ax.set_title('Distribution of Movie Ratings')
-    ax.set_xlabel('Movie Title')
-    ax.set_ylabel('Rating')
-    ax.tick_params(axis='x', rotation=90)
-    st.pyplot(fig)
-    st.write("This line chart displays the distribution of movie ratings. It helps us understand how ratings vary across different movies, showing trends and fluctuations.")
+elif selected_aspect == "Composition":
+    st.subheader("Composition Chart - Donut Chart")
+    # Contoh Donut Chart: Komposisi genre film
+    genre_counts = df1['Genre'].value_counts()
+    plt.figure(figsize=(8, 8))
+    plt.pie(genre_counts, labels=genre_counts.index, autopct='%1.1f%%', startangle=140, wedgeprops=dict(width=0.3))
+    plt.title("Composition of Movie Genres")
+    st.pyplot(plt)
 
-# Run the Streamlit app with: streamlit run script_name.py
+elif selected_aspect == "Distribution":
+    st.subheader("Distribution Chart - Line Chart")
+    # Contoh Line Chart: Distribusi rating film
+    plt.figure(figsize=(10, 6))
+    sns.lineplot(data=df1['Rating'])
+    plt.title("Distribution of Movie Ratings")
+    st.pyplot(plt)
+
+# Menambahkan dekorasi untuk mempercantik tampilan
+st.sidebar.markdown("### Filter Options")
+st.sidebar.markdown("You can choose different aspects of visualization using the dropdown above.")
+st.sidebar.markdown("Enjoy exploring the movie data!")
+
+st.markdown("""
+<style>
+.sidebar .sidebar-content {
+    background-color: #f0f2f6;
+}
+</style>
+""", unsafe_allow_html=True)
