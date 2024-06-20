@@ -32,7 +32,7 @@ if selected_aspect == "Comparison":
     plt.title("Comparison of Movie Ratings")
     st.pyplot(plt)
     st.markdown("""
-        **Narasi Grafik**: Grafik batang di atas menampilkan perbandingan rating dari berbagai judul film yang ada dalam dataset. Pada sumbu horizontal (X) ditampilkan judul-judul film, sementara sumbu vertikal (Y) menunjukkan nilai rating dari setiap film. Tinggi setiap batang pada grafik menunjukkan besarnya rating yang diterima oleh film tersebut, di mana semakin tinggi batang, semakin tinggi pula rating film tersebut. Dengan visualisasi ini, dapat digunakan untuk mengidentifikasi film mana yang memiliki rating tertinggi dan terendah, serta melihat distribusi rating di antara berbagai judul film.
+        **Narasi Grafik**: Grafik batang di atas menampilkan perbandingan rating berbagai film. Pada sumbu horizontal, terdapat judul-judul film yang disusun secara vertikal agar lebih mudah dibaca. Sementara itu, sumbu vertikal menunjukkan nilai rating dari setiap film. Tinggi masing-masing batang mewakili rating yang diperoleh film tersebut, memungkinkan kita untuk dengan cepat membandingkan popularitas atau kualitas relatif dari setiap film berdasarkan rating yang diberikan. Judul grafik, "Comparison of Movie Ratings," memberikan konteks yang jelas bahwa fokus utama adalah pada perbandingan rating film. Melalui visualisasi ini, kita bisa mengidentifikasi film mana yang mendapatkan rating tertinggi dan terendah, serta melihat distribusi rating secara keseluruhan.
         """)
 
 elif selected_aspect == "Relationship":
@@ -43,19 +43,19 @@ elif selected_aspect == "Relationship":
     plt.title("Relationship between Budget and Gross Revenue")
     st.pyplot(plt)
     st.markdown("""
-        **Narasi Grafik**: Grafik scatter plot di atas menampilkan hubungan antara anggaran (budget) dan pendapatan kotor (gross revenue) dari berbagai film yang ada dalam dataset. Pada sumbu horizontal (X) ditampilkan anggaran film, sedangkan pada sumbu vertikal (Y) ditampilkan pendapatan kotor yang dihasilkan oleh film tersebut. Setiap titik pada grafik mewakili satu film, dengan posisi titik menunjukkan besarnya anggaran dan pendapatan kotor. Melalui visualisasi ini, pola hubungan antara anggaran dan pendapatan kotor dapat terlihat, seperti apakah film dengan anggaran lebih besar cenderung menghasilkan pendapatan yang lebih tinggi. Grafik ini membantu dalam menganalisis bagaimana investasi dalam anggaran film berkorelasi dengan keberhasilan finansialnya di box office.
+        **Narasi Grafik**: Grafik scatter plot di atas menampilkan hubungan antara anggaran (budget) dan pendapatan kotor (gross revenue) dari berbagai film. Pada sumbu horizontal, ditampilkan nilai anggaran yang dialokasikan untuk masing-masing film, sedangkan pada sumbu vertikal, tercatat pendapatan kotor yang dihasilkan oleh film tersebut. Setiap titik pada grafik mewakili satu film, sehingga kita dapat melihat pola atau tren tertentu dalam data. Judul grafik, "Relationship between Budget and Gross Revenue," menjelaskan fokus utama dari analisis ini, yaitu untuk menilai bagaimana anggaran film berhubungan dengan pendapatan yang dihasilkan. Melalui visualisasi ini, kita dapat mengamati apakah ada kecenderungan bahwa film dengan anggaran lebih besar cenderung menghasilkan pendapatan kotor yang lebih tinggi, atau jika ada outlier yang menonjol dengan anggaran kecil namun pendapatan besar, atau sebaliknya.
         """)
 
 elif selected_aspect == "Composition":
     st.subheader("Composition Chart - Donut Chart")
     # Contoh Donut Chart: Komposisi genre film
     genre_counts = df1['Genre'].value_counts()
-    plt.figure(figsize=(10, 15))
+    plt.figure(figsize=(15, 17))
     plt.pie(genre_counts, labels=genre_counts.index, autopct='%1.1f%%', startangle=140, wedgeprops=dict(width=0.3))
     plt.title("Composition of Movie Genres")
     st.pyplot(plt)
     st.markdown("""
-        **Narasi Grafik**: Grafik donat di atas menampilkan komposisi genre film dalam dataset. Setiap sektor pada grafik mewakili satu genre film, dengan ukuran sektor yang proporsional terhadap jumlah film dalam genre tersebut. Persentase di setiap sektor menunjukkan proporsi masing-masing genre terhadap keseluruhan dataset. Dengan visualisasi ini, kita dapat dengan mudah melihat genre film yang paling dominan serta seberapa besar kontribusi setiap genre terhadap keseluruhan komposisi film. 
+        **Narasi Grafik**: Grafik donat di atas menampilkan komposisi genre film yang ada dalam dataset. Setiap segmen pada grafik merepresentasikan satu genre film, dengan ukuran segmen yang proporsional terhadap jumlah film dalam genre tersebut. Persentase di dalam setiap segmen menunjukkan proporsi masing-masing genre dalam keseluruhan kumpulan data. Judul grafik, "Composition of Movie Genres," menjelaskan bahwa fokus utama adalah untuk menunjukkan distribusi berbagai genre film. Melalui visualisasi ini, kita dapat dengan mudah melihat genre mana yang paling dominan dan seberapa besar kontribusi masing-masing genre terhadap total keseluruhan. Grafik donat ini memberikan gambaran yang jelas dan intuitif tentang bagaimana berbagai genre film terdistribusi dalam dataset.
         """)
 
 elif selected_aspect == "Distribution":
@@ -66,7 +66,7 @@ elif selected_aspect == "Distribution":
     plt.title("Distribution of Movie Ratings")
     st.pyplot(plt)
     st.markdown("""
-        **Narasi Grafik**: Grafik garis di atas menampilkan distribusi rating film dalam dataset. Sumbu horizontal (X) mewakili indeks atau urutan film dalam dataset, sedangkan sumbu vertikal (Y) menunjukkan nilai rating dari setiap film. Garis pada grafik menggambarkan perubahan rating dari satu film ke film lainnya, memberikan pandangan tentang bagaimana rating bervariasi di seluruh dataset. Dengan visualisasi ini, kita dapat mengidentifikasi pola atau tren dalam rating film, seperti adanya periode dengan rating tinggi atau rendah yang konsisten.
+        **Narasi Grafik**: Grafik garis di atas menampilkan distribusi rating film dalam dataset. Sumbu horizontal merepresentasikan urutan data rating film, sementara sumbu vertikal menunjukkan nilai rating tersebut. Setiap titik pada grafik dihubungkan dengan garis, memberikan visualisasi yang jelas tentang bagaimana rating film terdistribusi. Judul grafik, "Distribution of Movie Ratings," menekankan bahwa fokus utama adalah pada distribusi nilai rating. Melalui visualisasi ini, kita dapat mengamati pola atau tren tertentu dalam rating film, seperti apakah terdapat banyak film dengan rating tinggi atau rendah, dan bagaimana variasi rating tersebut tersebar. Grafik ini membantu kita memahami bagaimana kualitas film dinilai secara keseluruhan dalam dataset.
         """)
 
 st.markdown("""
