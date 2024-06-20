@@ -7,7 +7,7 @@ import seaborn as sns
 fn1 = 'top_picks_film.csv'
 
 # Menampilkan judul di halaman web
-st.title("Scraping Film IMDB")
+st.title("Visualization Scraping Film IMDB")
 
 # Membaca file CSV ke dalam DataFrame dengan encoding 'latin1'
 df1 = pd.read_csv(fn1, encoding='latin1')
@@ -50,7 +50,7 @@ elif selected_aspect == "Composition":
     st.subheader("Composition Chart - Donut Chart")
     # Contoh Donut Chart: Komposisi genre film
     genre_counts = df1['Genre'].value_counts()
-    plt.figure(figsize=(10, 10))
+    plt.figure(figsize=(10, 15))
     plt.pie(genre_counts, labels=genre_counts.index, autopct='%1.1f%%', startangle=140, wedgeprops=dict(width=0.3))
     plt.title("Composition of Movie Genres")
     st.pyplot(plt)
