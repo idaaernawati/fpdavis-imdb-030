@@ -43,7 +43,7 @@ elif selected_aspect == "Relationship":
     plt.title("Relationship between Budget and Gross Revenue")
     st.pyplot(plt)
     st.markdown("""
-        **Narasi Grafik**: Grafik scatter plot di atas menampilkan hubungan antara anggaran (budget) dan pendapatan kotor (gross revenue) dari berbagai film. Hal ini dapat diartikan bahwa semakin besar anggaran film, semakin besar pula potensi pendapatan kotornya. Beberapa film dengan anggaran besar, seperti "Avatar" dan "Titanic", berhasil mencapai pendapatan kotor yang sangat tinggi. Ada beberapa film dengan anggaran kecil yang meraih kesuksesan besar, seperti "The Blair Witch Project" dan "Paranormal Activity". Secara keseluruhan, grafik ini menunjukkan bahwa anggaran film merupakan salah satu faktor yang dapat memengaruhi pendapatan kotornya.
+        **Narasi Grafik**: Grafik scatter plot di atas menampilkan hubungan antara anggaran (budget) dan pendapatan kotor (gross revenue) dari berbagai film. Hal ini dapat diartikan bahwa semakin besar anggaran film, semakin besar pula potensi pendapatan kotornya. Film dengan anggaran di atas 100 juta cenderung memiliki pendapatan kotor yang lebih tinggi dibandingkan film dengan anggaran dibawah 100 juta. Beberapa film dengan anggaran besar, seperti "Avatar" dan "Titanic", berhasil mencapai pendapatan kotor yang sangat tinggi. Ada beberapa film dengan anggaran kecil yang meraih kesuksesan besar, seperti "The Blair Witch Project" dan "Paranormal Activity". Secara keseluruhan, grafik ini menunjukkan bahwa anggaran film merupakan salah satu faktor yang dapat memengaruhi pendapatan kotornya.
         """)
 
 elif selected_aspect == "Composition":
