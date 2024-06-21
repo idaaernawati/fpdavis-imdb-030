@@ -32,7 +32,7 @@ if selected_aspect == "Comparison":
     plt.title("Comparison of Movie Ratings")
     st.pyplot(plt)
     st.markdown("""
-        **Narasi Grafik**: Grafik batang di atas menampilkan perbandingan rating berbagai film. Pada sumbu horizontal, terdapat judul-judul film yang disusun secara vertikal agar lebih mudah dibaca. Sementara itu, sumbu vertikal menunjukkan nilai rating dari setiap film. Tinggi masing-masing batang mewakili rating yang diperoleh film tersebut, memungkinkan kita untuk dengan cepat membandingkan popularitas atau kualitas relatif dari setiap film berdasarkan rating yang diberikan. Judul grafik, "Comparison of Movie Ratings," memberikan konteks yang jelas bahwa fokus utama adalah pada perbandingan rating film. Melalui visualisasi ini, kita bisa mengidentifikasi film mana yang mendapatkan rating tertinggi dan terendah, serta melihat distribusi rating secara keseluruhan.
+        **Narasi Grafik**: Grafik batang di atas menampilkan perbandingan rating beberapa film populer. Judul film tercantum pada sumbu X, sedangkan rating film tercantum pada sumbu Y. Semakin tinggi batang, semakin tinggi rating film tersebut. Dari grafik tersebut, dapat dilihat bahwa film dengan rating tertinggi adalah Spider-Man: No Way Home, dengan rating 4.5. Disusul dengan Mad Max: Fury Road dengan rating 4.3 dan King Kong dengan rating 4.2. Film dengan rating terendah adalah Oppenheimer, Pacific Rim, dan Bullet Train, dengan rating sama yaitu 3.0. Secara umum, film-film yang ditampilkan dalam grafik ini memiliki rating yang cukup tinggi, dengan rata-rata rating 3.8. Hal ini menunjukkan bahwa film-film tersebut umumnya disukai oleh para penonton.
         """)
 
 elif selected_aspect == "Relationship":
@@ -43,7 +43,7 @@ elif selected_aspect == "Relationship":
     plt.title("Relationship between Budget and Gross Revenue")
     st.pyplot(plt)
     st.markdown("""
-        **Narasi Grafik**: Grafik scatter plot di atas menampilkan hubungan antara anggaran (budget) dan pendapatan kotor (gross revenue) dari berbagai film. Pada sumbu horizontal, ditampilkan nilai anggaran yang dialokasikan untuk masing-masing film, sedangkan pada sumbu vertikal, tercatat pendapatan kotor yang dihasilkan oleh film tersebut. Setiap titik pada grafik mewakili satu film, sehingga kita dapat melihat pola atau tren tertentu dalam data. Judul grafik, "Relationship between Budget and Gross Revenue," menjelaskan fokus utama dari analisis ini, yaitu untuk menilai bagaimana anggaran film berhubungan dengan pendapatan yang dihasilkan. Melalui visualisasi ini, kita dapat mengamati apakah ada kecenderungan bahwa film dengan anggaran lebih besar cenderung menghasilkan pendapatan kotor yang lebih tinggi, atau jika ada outlier yang menonjol dengan anggaran kecil namun pendapatan besar, atau sebaliknya.
+        **Narasi Grafik**: Grafik scatter plot di atas menampilkan hubungan antara anggaran (budget) dan pendapatan kotor (gross revenue) dari berbagai film. Hal ini dapat diartikan bahwa semakin besar anggaran film, semakin besar pula potensi pendapatan kotornya. Film dengan anggaran di atas $100 juta cenderung memiliki pendapatan kotor yang lebih tinggi dibandingkan film dengan anggaran di bawah $100 juta. Beberapa film dengan anggaran besar, seperti "Avatar" dan "Titanic", berhasil mencapai pendapatan kotor yang sangat tinggi. Ada beberapa film dengan anggaran kecil yang meraih kesuksesan besar, seperti "The Blair Witch Project" dan "Paranormal Activity". Secara keseluruhan, grafik ini menunjukkan bahwa anggaran film merupakan salah satu faktor yang dapat memengaruhi pendapatan kotornya.
         """)
 
 elif selected_aspect == "Composition":
@@ -55,7 +55,7 @@ elif selected_aspect == "Composition":
     plt.title("Composition of Movie Genres")
     st.pyplot(plt)
     st.markdown("""
-        **Narasi Grafik**: Grafik donat di atas menampilkan komposisi genre film yang ada dalam dataset. Setiap segmen pada grafik merepresentasikan satu genre film, dengan ukuran segmen yang proporsional terhadap jumlah film dalam genre tersebut. Persentase di dalam setiap segmen menunjukkan proporsi masing-masing genre dalam keseluruhan kumpulan data. Judul grafik, "Composition of Movie Genres," menjelaskan bahwa fokus utama adalah untuk menunjukkan distribusi berbagai genre film. Melalui visualisasi ini, kita dapat dengan mudah melihat genre mana yang paling dominan dan seberapa besar kontribusi masing-masing genre terhadap total keseluruhan. Grafik donat ini memberikan gambaran yang jelas dan intuitif tentang bagaimana berbagai genre film terdistribusi dalam dataset.
+        **Narasi Grafik**: Grafik donat di atas menampilkan komposisi genre film berdasarkan data dari IMDb. Grafik ini dibagi menjadi beberapa segmen yang mewakili genre film yang berbeda, dengan persentase masing-masing genre tertera di samping segmennya. Grafik ini menunjukkan bahwa genre action, action, adventure, sci-fi, dan drama adalah genre film yang paling populer. Genre-genre ini banyak diminati oleh para penonton karena menawarkan berbagai macam hiburan, seperti aksi, petualangan, fiksi ilmiah, dan drama. Genre horror dan animation masih memiliki peminat, meskipun persentasenya tidak sebesar genre-genre lainnya.
         """)
 
 elif selected_aspect == "Distribution":
@@ -66,7 +66,7 @@ elif selected_aspect == "Distribution":
     plt.title("Distribution of Movie Ratings")
     st.pyplot(plt)
     st.markdown("""
-        **Narasi Grafik**: Grafik garis di atas menampilkan distribusi rating film dalam dataset. Sumbu horizontal merepresentasikan urutan data rating film, sementara sumbu vertikal menunjukkan nilai rating tersebut. Setiap titik pada grafik dihubungkan dengan garis, memberikan visualisasi yang jelas tentang bagaimana rating film terdistribusi. Judul grafik, "Distribution of Movie Ratings," menekankan bahwa fokus utama adalah pada distribusi nilai rating. Melalui visualisasi ini, kita dapat mengamati pola atau tren tertentu dalam rating film, seperti apakah terdapat banyak film dengan rating tinggi atau rendah, dan bagaimana variasi rating tersebut tersebar. Grafik ini membantu kita memahami bagaimana kualitas film dinilai secara keseluruhan dalam dataset.
+        **Narasi Grafik**: Grafik garis distribusi rating film di atas, dapat diamati bahwa rating film terbanyak berkisar antara 7.0 hingga 7.5. Hal ini menunjukkan bahwa sebagian besar film yang ditampilkan pada platform tersebut memiliki kualitas yang cukup baik dan diterima oleh para penonton. Meskipun rating film terbanyak berkisar antara 7.0 hingga 7.5, terdapat beberapa film dengan rating yang lebih tinggi dan lebih rendah. Hal ini menunjukkan bahwa platform tersebut tidak hanya menampilkan film-film mainstream yang populer di kalangan masyarakat luas, tetapi juga film-film indie atau film-film klasik yang mungkin disukai oleh sekelompok kecil pengguna. Secara keseluruhan, grafik distribusi rating film di atas menunjukkan bahwa platform tersebut menyediakan berbagai jenis film dengan kualitas yang beragam, sehingga dapat memenuhi kebutuhan dan selera para penggunanya.
         """)
 
 st.markdown("""
